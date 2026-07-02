@@ -88,7 +88,12 @@ ip,series,card_name,rarity,image_url,local_path
 ### 1. 克隆项目
 
 ```bash
+# Gitee 镜像（国内访问快）
 git clone https://gitee.com/yhl5244/kadong_cards_crawler.git
+cd kadong_cards_crawler
+
+# GitHub 原仓库
+git clone https://github.com/5244DragonLin/kadong_cards_crawler.git
 cd kadong_cards_crawler
 ```
 
