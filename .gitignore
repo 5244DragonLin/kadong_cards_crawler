@@ -1,0 +1,15 @@
+# Output
+output/
+*.png
+*.jpg
+*.gif
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
