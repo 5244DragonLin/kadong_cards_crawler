@@ -283,10 +283,10 @@ def _flatten_config(data: dict) -> dict:
     return flat
 
 
-def main():
+def main(argv=None):
     pre_parser = argparse.ArgumentParser(add_help=False)
     pre_parser.add_argument("--yaml", "-y", default="config.yaml")
-    pre_args, _ = pre_parser.parse_known_args()
+    pre_args, _ = pre_parser.parse_known_args(argv)
     yaml_defaults = load_config(pre_args.yaml)
 
     parser = argparse.ArgumentParser(description="Kadong Cards Crawler")
@@ -299,7 +299,7 @@ def main():
     parser.add_argument("--list-ip", action="store_true", help="列出所有可下载的 IP 名称后退出")
     if yaml_defaults:
         parser.set_defaults(**yaml_defaults)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     # 获取 IP 列表
     print("正在获取 IP 列表...")
