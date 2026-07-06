@@ -8,6 +8,7 @@ incremental download and resume from breakpoint.
 
 import argparse
 import csv
+import yaml
 import os
 import sys
 import threading
@@ -238,14 +239,66 @@ def export_csv(cards_list: list[dict], csv_path: str):
             })
 
 
+def load_config(config_path: str = "config.yaml") -> dict:
+    """从 YAML 配置文件加载配置并扁平化为 argparse 参数字典。
+
+    优先级: config.yaml > config.example.yaml > 空字典
+    """
+    import os as _os
+
+    for path in (config_path, _os.path.splitext(config_path)[0] + ".example.yaml",
+                  "config.example.yaml"):
+        if _os.path.exists(path):
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    data = yaml.safe_load(f) or {}
+                return _flatten_config(data)
+            except Exception:
+                continue
+    return {}
+
+
+def _flatten_config(data: dict) -> dict:
+    """将嵌套的 YAML 配置扁平化为 argparse 参数名。"""
+    flat = {}
+
+    dl = data.get("download", {})
+    if isinstance(dl, dict):
+        if dl.get("output_dir"):
+            flat["output"] = dl["output_dir"]
+        if dl.get("concurrency") is not None:
+            flat["concurrency"] = dl["concurrency"]
+
+    filters = data.get("filters", {})
+    if isinstance(filters, dict):
+        if filters.get("ip"):
+            flat["ip"] = filters["ip"]
+        if filters.get("series"):
+            flat["series"] = filters["series"]
+
+    csv_cfg = data.get("csv", {})
+    if isinstance(csv_cfg, dict) and csv_cfg.get("path"):
+        flat["csv"] = csv_cfg["path"]
+
+    return flat
+
+
 def main():
+    pre_parser = argparse.ArgumentParser(add_help=False)
+    pre_parser.add_argument("--yaml", "-y", default="config.yaml")
+    pre_args, _ = pre_parser.parse_known_args()
+    yaml_defaults = load_config(pre_args.yaml)
+
     parser = argparse.ArgumentParser(description="Kadong Cards Crawler")
+    parser.add_argument("--yaml", "-y", default="config.yaml", help="YAML 配置文件路径（CLI 参数优先级高于配置文件）")
     parser.add_argument("--ip", type=str, default="", help="指定 IP，逗号分隔（如 哆啦A梦,奥特曼），不传则下载全部")
     parser.add_argument("--series", type=str, default="", help="指定系列，逗号分隔（如 珍藏版,豪华版），不传则下载全部")
     parser.add_argument("-o", "--output", type=str, default="output/kadong_cards", help="输出根目录")
     parser.add_argument("-c", "--concurrency", type=int, default=5, help="并发下载数（默认 5）")
     parser.add_argument("--csv", type=str, default="", help="导出卡牌清单 CSV 的路径（默认自动输出到 output 目录下）")
     parser.add_argument("--list-ip", action="store_true", help="列出所有可下载的 IP 名称后退出")
+    if yaml_defaults:
+        parser.set_defaults(**yaml_defaults)
     args = parser.parse_args()
 
     # 获取 IP 列表
