@@ -1,0 +1,46 @@
+# ============================================================
+# kadong_cards_crawler - 卡动文创卡牌图片爬虫 配置文件
+# ============================================================
+# 使用方法：复制为 config.yaml，运行时通过 --config 参数指定
+#   cp config.example.yaml config.yaml
+#   python kadong_cards_crawler.py --config config.yaml
+# 命令行参数（如 --ip、-o 等）优先级高于本配置文件。
+# ============================================================
+
+# ---------- API 配置 ----------
+api:
+  # IceSnowHelp API 基础地址
+  base_url: "https://kadongcc.com/ashx/IceSnowHelp.ashx"
+  # 请求超时时间（秒）
+  timeout: 30
+
+# ---------- 请求头配置 ----------
+headers:
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  referer: "https://kadongcc.com/"
+
+# ---------- 下载配置 ----------
+download:
+  # 输出根目录
+  output_dir: "output/kadong_cards"
+  # 并发下载线程数（建议 5~10）
+  concurrency: 5
+  # 图片请求超时（秒）
+  image_timeout: 60
+  # 跳过的图片扩展名（已下载的文件自动跳过）
+  skip_existing: true
+
+# ---------- 筛选配置（默认全部下载）----------
+filters:
+  # 指定 IP 名称，逗号分隔。留空表示下载全部
+  # 可用 IP 可通过 --list-ip 查看
+  ip: ""
+  # 指定系列名称，逗号分隔。留空表示下载全部
+  series: ""
+
+# ---------- CSV 导出配置 ----------
+csv:
+  # 导出路径，留空则自动输出到 output 目录下
+  path: ""
+  # CSV 编码
+  encoding: "utf-8-sig"

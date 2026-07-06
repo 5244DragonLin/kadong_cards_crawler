@@ -119,6 +119,27 @@ python kadong_cards_crawler.py --ip 哆啦A梦,蜡笔小新,鬼刀
 python kadong_cards_crawler.py --ip 鬼刀 -o ./my_cards
 ```
 
+### 4. 配置文件（可选）
+
+复制示例配置并按需修改，命令行参数优先级更高：
+
+```bash
+cp config.example.yaml config.yaml
+# 编辑 config.yaml 修改输出目录、并发数等
+python kadong_cards_crawler.py --config config.yaml
+```
+
+`config.example.yaml` 中可配置项：
+
+| 配置项 | 说明 | 默认值 |
+|--------|------|--------|
+| `api.base_url` | IceSnowHelp API 地址 | `kadongcc.com/ashx/...` |
+| `download.output_dir` | 输出根目录 | `output/kadong_cards` |
+| `download.concurrency` | 并发下载线程数 | `5` |
+| `filters.ip` | 筛选 IP 名称（逗号分隔） | 空（全部） |
+| `filters.series` | 筛选系列名称 | 空（全部） |
+| `csv.path` | CSV 导出路径 | 自动输出到 output 目录 |
+
 ## ⌨️CLI 模式
 
 ```
@@ -145,8 +166,9 @@ python kadong_cards_crawler.py [选项]
 
 ```text
 卡动图鉴爬虫/
-├── kadong_cards_crawler.py    # 主脚本
-├── requirements.txt     # pip install -r requirements.txt
+├── kadong_cards_crawler.py
+├── requirements.txt
+├── config.example.yaml  # 示例配置文件
 ├── README.md
 ├── LICENSE
 └── .gitignore
@@ -189,6 +211,19 @@ Fork → 创建分支 → 提交修改 → 发起 Pull Request。
 ### v1.0
 
 - 首个可用版本
+
+## ☕捐赠
+
+你的支持是我坚持开源的动力。
+
+| 支付宝 | 微信 |
+|--------|------|
+| ![支付宝](https://gitee.com/yhl5244/images/raw/master/donate_alipay.jpg) | ![微信](https://gitee.com/yhl5244/images/raw/master/donate_wechat.jpg) |
+
+## ⚠️免责声明
+
+本工具仅供学习交流使用，不得用于任何违反法律法规或侵犯第三方权益的用途。
+因使用本工具产生的一切后果由使用者自行承担，作者不承担任何法律责任。
 
 ## 📃许可证
 
