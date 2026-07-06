@@ -126,7 +126,7 @@ python kadong_cards_crawler.py --ip 鬼刀 -o ./my_cards
 ```bash
 cp config.example.yaml config.yaml
 # 编辑 config.yaml 修改输出目录、并发数等
-python kadong_cards_crawler.py --config config.yaml
+python kadong_cards_crawler.py --yaml config.yaml
 ```
 
 `config.example.yaml` 中可配置项：
@@ -139,6 +139,8 @@ python kadong_cards_crawler.py --config config.yaml
 | `filters.ip` | 筛选 IP 名称（逗号分隔） | 空（全部） |
 | `filters.series` | 筛选系列名称 | 空（全部） |
 | `csv.path` | CSV 导出路径 | 自动输出到 output 目录 |
+
+> ⚠️ YAML 中路径建议使用正斜杠 `/`（如 `E:/BaiduSyncdisk/...`），脚本会自动兼容。
 
 ## ⌨️CLI 模式
 
