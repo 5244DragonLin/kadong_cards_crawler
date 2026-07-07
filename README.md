@@ -1,4 +1,4 @@
-# kadong_cards_crawler
+﻿# kadong_cards_crawler
 
 从卡动文创（kadongcc.com）批量下载卡牌图鉴。基于 IceSnowHelp API，支持 12 个 IP 自由筛选、增量下载与断点续传，一条命令完成全部卡牌图鉴采集。
 
@@ -220,7 +220,7 @@ Fork → 创建分支 → 提交修改 → 发起 Pull Request。
 
 | 支付宝 | 微信 |
 |--------|------|
-| ![支付宝](https://gitee.com/yhl5244/images/raw/master/donate_alipay.jpg) | ![微信](https://gitee.com/yhl5244/images/raw/master/donate_wechat.jpg) |
+| ![支付宝](./assets/donate_alipay.jpg) | ![微信](./assets/donate_wechat.jpg) |
 
 ## ⚠️免责声明
 
