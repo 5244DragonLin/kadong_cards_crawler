@@ -121,13 +121,20 @@ python kadong_cards_crawler.py --ip 鬼刀 -o ./my_cards
 
 ### 4. 配置文件（可选）
 
-复制示例配置并按需修改，命令行参数优先级更高：
+复制示例配置并按需修改。**`--yaml` 参数默认即为 `config.yaml`，不传也会自动读取当前目录下的 `config.yaml`**，因此存在 `config.yaml` 时直接运行即可：
 
 ```bash
 cp config.example.yaml config.yaml
 # 编辑 config.yaml 修改输出目录、并发数等
-python kadong_cards_crawler.py --yaml config.yaml
+
+# 方式一：不传 --yaml，自动加载当前目录的 config.yaml（最常用）
+python kadong_cards_crawler.py
+
+# 方式二：仅当配置文件改名或不在当前目录时，才需要显式指定
+python kadong_cards_crawler.py --yaml /path/to/other_config.yaml
 ```
+
+命令行参数优先级高于配置文件（如 `--ip`、`-o` 等会覆盖 `config.yaml` 中的同名项）。
 
 `config.example.yaml` 中可配置项：
 
@@ -138,7 +145,7 @@ python kadong_cards_crawler.py --yaml config.yaml
 | `download.concurrency` | 并发下载线程数 | `5` |
 | `filters.ip` | 筛选 IP 名称（逗号分隔） | 空（全部） |
 | `filters.series` | 筛选系列名称 | 空（全部） |
-| `csv.path` | CSV 导出路径 | 自动输出到 output 目录 |
+| `csv.path` | CSV 导出**文件**路径（含文件名，如 `output/kadong_cards.csv`；只填目录会报错） | 自动输出到 output 目录 |
 
 > ⚠️ YAML 中路径建议使用正斜杠 `/`（如 `E:/BaiduSyncdisk/...`），脚本会自动兼容。
 
@@ -162,7 +169,7 @@ python kadong_cards_crawler.py [选项]
 |------|------|--------|
 | `-c, --concurrency` | 并发下载线程数 | `5` |
 | `-o, --output` | 输出根目录 | `output/kadong_cards` |
-| `--csv` | 导出卡牌清单 CSV 的路径（默认自动输出到 output 目录下） | `output/kadong_cards/kadong_cards.csv` |
+| `--csv` | 导出卡牌清单 CSV 的**完整文件路径**（含文件名，如 `output/my_list.csv`；只填目录会报错） | `output/kadong_cards/kadong_cards.csv` |
 
 ## 📂项目结构
 

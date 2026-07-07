@@ -1,9 +1,11 @@
 # ============================================================
 # kadong_cards_crawler - 卡动文创卡牌图片爬虫 配置文件
 # ============================================================
-# 使用方法：复制为 config.yaml，运行时通过 --config 参数指定
+# 使用方法：复制为 config.yaml 即可，脚本会自动读取同目录下的 config.yaml
 #   cp config.example.yaml config.yaml
-#   python kadong_cards_crawler.py --config config.yaml
+#   python kadong_cards_crawler.py            # 自动加载 config.yaml（最常用）
+# 仅当配置文件改名或不在当前目录时，才用 --yaml 显式指定：
+#   python kadong_cards_crawler.py --yaml /path/to/other_config.yaml
 # 命令行参数（如 --ip、-o 等）优先级高于本配置文件。
 # ============================================================
 
@@ -40,7 +42,10 @@ filters:
 
 # ---------- CSV 导出配置 ----------
 csv:
-  # 导出路径，留空则自动输出到 output 目录下
+  # 导出「文件」路径：必须是完整路径 + 文件名，例如 output/kadong_cards.csv 或 D:/data/my_list.csv
+  # ⚠️ 这里填的是「文件路径」不是「目录」！只填目录（如 output/data 或 output/data/）
+  #    会报错（Windows 下 open() 把目录当文件打开 → PermissionError）或生成无 .csv 后缀的错文件
+  # 留空则自动输出到 output 目录下（文件名固定为 kadong_cards.csv）
   path: ""
   # CSV 编码
   encoding: "utf-8-sig"
