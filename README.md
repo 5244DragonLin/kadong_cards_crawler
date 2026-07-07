@@ -221,6 +221,12 @@ Fork → 创建分支 → 提交修改 → 发起 Pull Request。
 
 - 首个可用版本
 
+## 🔗 关联项目
+
+- **[doraemon-card-collection](https://github.com/5244DragonLin/doraemon-card-collection)** — 哆啦A梦卡牌收藏站，使用本工具采集的图鉴目录生成 `data.js`
+  - GitHub：https://github.com/5244DragonLin/doraemon-card-collection
+  - Gitee：https://gitee.com/yhl5244/doraemon-card-collection
+
 ## ☕捐赠
 
 你的支持是我坚持开源的动力。
