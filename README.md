@@ -115,8 +115,17 @@ python kadong_cards_crawler.py --ip 哆啦A梦
 # 下载多个 IP
 python kadong_cards_crawler.py --ip 哆啦A梦,蜡笔小新,鬼刀
 
+# 指定系列筛选
+python kadong_cards_crawler.py --ip 哆啦A梦 --series 珍藏版
+
 # 指定输出目录
 python kadong_cards_crawler.py --ip 鬼刀 -o ./my_cards
+
+# 只搜索不下载（dry-run）
+python kadong_cards_crawler.py --ip 哆啦A梦 --dry-run
+
+# 强制重新下载（覆盖已有文件）
+python kadong_cards_crawler.py --ip 哆啦A梦 --force
 ```
 
 ### 4. 配置文件（可选）
@@ -162,6 +171,8 @@ python kadong_cards_crawler.py [选项]
 | `--ip` | 指定 IP，逗号分隔（如 哆啦A梦,蜡笔小新）。不传则下载全部 | 全部 |
 | `--series` | 指定系列，逗号分隔（如 珍藏版,豪华版）。匹配系列名含指定关键词的系列 | 全部 |
 | `--list-ip` | 列出所有可下载的 IP 名称后退出 | — |
+| `--dry-run` | 只搜索展示匹配的 IP/系列/卡牌，不实际下载图片 | — |
+| `--force, -f` | 强制重新下载，已存在的图片也会覆盖 | — |
 
 ### 下载选项
 

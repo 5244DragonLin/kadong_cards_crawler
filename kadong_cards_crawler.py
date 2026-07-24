@@ -128,12 +128,12 @@ def sanitize_name(name: str) -> str:
     return name.strip()
 
 
-def download_single(task: dict) -> dict:
+def download_single(task: dict, force: bool = False) -> dict:
     """下载单张图片（供线程池调用），返回结果字典。"""
     url = task["url"]
     save_path = task["save_path"]
 
-    if os.path.exists(save_path):
+    if os.path.exists(save_path) and not force:
         return {"status": "skip", "path": save_path}
 
     try:
@@ -303,6 +303,8 @@ def main(argv=None):
     parser.add_argument("-c", "--concurrency", type=int, default=5, help="并发下载数（默认 5）")
     parser.add_argument("--csv", type=str, default="", help="导出卡牌清单 CSV 的路径（默认自动输出到 output 目录下）")
     parser.add_argument("--list-ip", action="store_true", help="列出所有可下载的 IP 名称后退出")
+    parser.add_argument("--dry-run", action="store_true", help="只搜索展示匹配的 IP/系列/卡牌，不实际下载图片")
+    parser.add_argument("--force", "-f", action="store_true", help="强制重新下载，已存在的图片也会覆盖")
     if yaml_defaults:
         parser.set_defaults(**yaml_defaults)
     args = parser.parse_args(argv)
@@ -402,6 +404,16 @@ def main(argv=None):
         print("没有需要下载的卡牌。")
         return
 
+    # --- dry-run 模式：只展示不下载 ---
+    if args.dry_run:
+        print(f"\n[dry-run] 共找到 {len(all_tasks)} 张卡牌，不会实际下载：")
+        for t in all_tasks:
+            print(f"  → {t['save_path']}")
+            print(f"    URL: {t['url']}")
+        return
+
+    if args.force:
+        print("强制模式：已存在的图片也会被覆盖重新下载")
     print(f"\n共 {len(all_tasks)} 张卡牌待处理，开始下载（并发 {args.concurrency}）...")
 
     # 导出 CSV
@@ -416,7 +428,7 @@ def main(argv=None):
 
     with tqdm(total=len(all_tasks), unit="张") as pbar:
         with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
-            futures = {executor.submit(download_single, t): t for t in all_tasks}
+            futures = {executor.submit(download_single, t, args.force): t for t in all_tasks}
             for future in as_completed(futures):
                 result = future.result()
                 if result["status"] == "success":
